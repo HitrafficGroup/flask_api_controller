@@ -62,7 +62,6 @@ class MySocketHT200:
                     CheckSumCalc += array_data_received[i]
             CheckSumCalc = (CheckSumCalc % 256)
             if CheckSumCalc != CheckSumReceive:
-                print("checksum diferente")
                 return False
             self.__rx_num = 0
             self.__num = 11
@@ -81,7 +80,6 @@ class MySocketHT200:
                     self.__num += 1
             return True
         except OSError :
-            print("algo ocurrio mal")
             return False
 
     def ping(self,host_or_ip, packets=1, timeout=500):
@@ -117,10 +115,11 @@ class MySocketHT200:
                 "year": year,
             }
             return time_controler
+        else:
+            return False
 
     def getFases(self, ip):
         rx_var = self.__rx_var
-        print('solicitando fases ....')
         if self.readPendingDatagrams(tramas.fases_frame, ip):
             PhaseSize = 32
             if 16 == rx_var[0] and self.__rx_num == PhaseSize * 16 + 1:
@@ -482,7 +481,7 @@ class MySocketHT200:
                 }
                 return unit_dict
         else:
-            False
+            return False
     def getUnitHT200(self, ip):
         rx_var = self.__rx_var
         if self.readPendingDatagrams(tramas.unit_frame, ip):
@@ -515,10 +514,10 @@ class MySocketHT200:
                     "GoiaSync":GoiaSync,
                     "SemaforoFlag":ConexionSemaforos
                 }
-                print(unit_dict)
+      
                 return unit_dict
         else:
-            False
+            return False
 
     def getChannel(self, ip):
         rx_var = self.__rx_var
@@ -838,12 +837,10 @@ class MySocketHT200:
             gbtx[num] = CheckSumCalc
             num += 1
         gbtx[num] = 192  # frame tail
-        print("se envia fases correctamente")
         return self.enviarData(gbtx, ip_controller)
 
     def setSecuencias(self, data, ip_controller):
         gbtx = bytearray(1118)
-        print("sec ...")
         # trama normal para escritura
         gbtx[0] = 192
         gbtx[1] = 32
@@ -897,11 +894,9 @@ class MySocketHT200:
             gbtx[num] = CheckSumCalc
             num += 1
         gbtx[num] = 192  # frame tail
-        print("se envia secuencias correctamente")
         return self.enviarData(gbtx, ip_controller)
 
     def setSplit(self, data, ip_controller):
-        print("split ...")
         gbtx = bytearray(1314)
         # trama normal para escritura
         gbtx[0] = 192
@@ -956,11 +951,9 @@ class MySocketHT200:
             gbtx[num] = CheckSumCalc
             num += 1
         gbtx[num] = 192  # frame tail
-        print("se envia split correctamente")
         return self.enviarData(gbtx, ip_controller)
 
     def setPattern(self, data, ip_controller):
-        print("pattern ...")
         gbtx = bytearray(714)
         # trama normal para escritura
         gbtx[0] = 192
@@ -1015,11 +1008,9 @@ class MySocketHT200:
             gbtx[num] = CheckSumCalc
             num += 1
         gbtx[num] = 192  # frame tail
-        print("se envia pattern correctamente")
         return self.enviarData(gbtx, ip_controller)
 
     def setAction(self, data, ip_controller):
-        print("action ...")
         gbtx = bytearray(414)
         # trama normal para escritura
         gbtx[0] = 192
@@ -1073,7 +1064,6 @@ class MySocketHT200:
             gbtx[num] = CheckSumCalc
             num += 1
         gbtx[num] = 192  # frame tail
-        print("se envia accion correctamente")
         return self.enviarData(gbtx, ip_controller)
 
     def setPlan(self, data, ip_controller):
@@ -1335,25 +1325,18 @@ class MySocketHT200:
     def setBasicPlan(self, data_target, ip):
 
         if self.setFases(ip_controller=ip, data=data_target['fases']) == False:
-            print("fases wrong")
             return False
         elif self.setSecuencias(ip_controller=ip, data=data_target['secuencias']) == False:
-            print("secuencias wrong")
             return False
         elif self.setSplit(ip_controller=ip, data=data_target['split']) == False:
-            print("split wrong")
             return False
         elif self.setPattern(ip_controller=ip, data=data_target['pattern']) == False:
-            print("pattern wrong")
             return False
         elif self.setAction(ip_controller=ip, data=data_target['accion']) == False:
-            print("accion wrong")
             return False
         elif self.setPlan(ip_controller=ip, data=data_target['plan']) == False:
-            print("plan wrong")
             return False
         elif self.setChannel(ip_controller=ip, data=data_target['channel']) == False:
-            print("channel wrong")
             return False
         else:
             return True

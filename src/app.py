@@ -18,6 +18,8 @@ def getTimeHT200():
     args = request.args
     ip = args.get('ip')
     result = controlador_ht200.getTime(ip)
+    if result == False:
+        return "Controller is not accesible", 503
     return jsonify(result)
    
 
