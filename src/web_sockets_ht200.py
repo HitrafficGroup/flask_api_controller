@@ -1066,7 +1066,6 @@ class MySocketHT200:
         return self.enviarData(gbtx, ip_controller)
 
     def setPlan(self, data, ip_controller):
-        print("plan ...")
         gbtx = bytearray(1182)
         # trama normal para escritura
         gbtx[0] = 192
@@ -1322,7 +1321,6 @@ class MySocketHT200:
         return self.enviarData(gbtx, ip_controller)
 
     def setBasicPlan(self, data_target, ip):
-
         if self.setFases(ip_controller=ip, data=data_target['fases']) == False:
             return False
         elif self.setSecuencias(ip_controller=ip, data=data_target['secuencias']) == False:

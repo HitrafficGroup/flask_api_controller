@@ -180,7 +180,9 @@ def setUnitHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setUnitHT200(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 @app.route('/rest/setFasesHT200', methods=['POST'])
 def setFasesHT200():
