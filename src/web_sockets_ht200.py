@@ -782,7 +782,6 @@ class MySocketHT200:
 
     def setFases(self, data, ip_controller):
         gbtx = bytearray(526)
-        print("fases ...")
         # trama normal para escritura
         gbtx[0] = 192
         gbtx[1] = 32
@@ -1317,8 +1316,8 @@ class MySocketHT200:
             gbtx[num] = CheckSumCalc
             num += 1
         gbtx[num] = 192  # frame tail
-        print(list(gbtx))
-        return True
+        # print(list(gbtx))
+        # return True
         print(ip_controller)
         return self.enviarData(gbtx, ip_controller)
 
@@ -1390,8 +1389,6 @@ class MySocketHT200:
                 gbtx[num] = CheckSumCalc
                 num += 1
             gbtx[num] = 192  # frame tail
-            print(list(gbtx))
-            print(ip_controller)
             return self.enviarData(gbtx, ip_controller)
 
 
@@ -1399,6 +1396,9 @@ class MySocketHT200:
         __udpsocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         flag = False
         port = 13536
+        is_connected = self.ping(ip)
+        if is_connected == False:
+            return False
         while True:
             try:
                 __udpsocket.bind(('0.0.0.0', port))

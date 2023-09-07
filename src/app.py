@@ -170,6 +170,10 @@ def getWorkStateHT200():
     return jsonify(result)
 
 
+'''
+Funciones  de Escritura API HT200
+'''
+
 @app.route('/rest/setUnitHT200', methods=['POST'])
 def setUnitHT200():
     args = request.args
@@ -184,7 +188,9 @@ def setFasesHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setFases(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 
 @app.route('/rest/setSecuenciasHT200', methods=['POST'])
@@ -193,7 +199,9 @@ def setSecuencias():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setSecuencias(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 
 @app.route('/rest/setSplitHT200', methods=['POST'])
@@ -202,7 +210,9 @@ def setSplitHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setSplit(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 
 @app.route('/rest/setPatternHT200', methods=['POST'])
@@ -211,7 +221,9 @@ def setPatternHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setPattern(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 @app.route('/rest/setActionHT200', methods=['POST'])
 def setActionHT200():
@@ -219,7 +231,9 @@ def setActionHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setAction(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 @app.route('/rest/setPlanHT200', methods=['POST'])
 def setPlanHT200():
@@ -227,7 +241,9 @@ def setPlanHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setPlan(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 @app.route('/rest/setHorariosHT200', methods=['POST'])
 def setHorariosHT200():
@@ -235,7 +251,9 @@ def setHorariosHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setHorarios(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 @app.route('/rest/setChannelHT200', methods=['POST'])
 def setChannelHT200():
@@ -243,7 +261,9 @@ def setChannelHT200():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setChannel(json_data['trama'],ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 
 
@@ -253,7 +273,9 @@ def setBasicPlan():
     json_data = request.get_json(force=True) 
     ip = args.get('ip')
     result = controlador_ht200.setBasicPlan(json_data,ip)
-    return jsonify(result)
+    if result == False:
+        return "Controller is not accesible", 503
+    return "Dato Recibido",200
 
 mode = "dev"
 if __name__ == '__main__':
